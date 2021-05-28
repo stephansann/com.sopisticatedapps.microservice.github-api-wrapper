@@ -10,10 +10,11 @@ import javax.validation.constraints.NotBlank;
 @Client("/githubApiWrapper")
 public interface GithubApiWrapperClient {
 
-    @Get("/{aRepository}/latestReleaseTag")
-    Single<String> latestReleaseTag(@NotBlank String aRepository);
+    @Get("/{anOrganization}/{aRepository}/latestReleaseTag")
+    Single<String> latestReleaseTag(@NotBlank String anOrganization, @NotBlank String aRepository);
 
-    @Get("/{aRepository}/latestReleaseAssetDownloadUrl{?aRecognizer}")
-    Single<String> latestReleaseAssetDownloadUrl(@NotBlank String aRepository, @Nullable String aRecognizer);
+    @Get("/{anOrganization}/{aRepository}/latestReleaseAssetDownloadUrl{?aRecognizer}")
+    Single<String> latestReleaseAssetDownloadUrl(
+            @NotBlank String anOrganization, @NotBlank String aRepository, @Nullable String aRecognizer);
 
 }

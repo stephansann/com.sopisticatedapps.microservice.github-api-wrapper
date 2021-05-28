@@ -29,17 +29,20 @@ class GithubApiWrapperControllerTest {
     @Test
     void latestReleaseTag() {
 
-        String tmpResponse = client.latestReleaseTag("Document-Archiver/com.sophisticatedapps.archiving.document-archiver").blockingGet();
+        String tmpResponse = client.latestReleaseTag(
+                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver").blockingGet();
         assertEquals("v2.1.0", tmpResponse);
     }
 
     @Test
     void latestReleaseAssetDownloadUrl() {
 
-        String tmpResponse = client.latestReleaseAssetDownloadUrl("Document-Archiver/com.sophisticatedapps.archiving.document-archiver", null).blockingGet();
+        String tmpResponse = client.latestReleaseAssetDownloadUrl(
+                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver", null).blockingGet();
         assertEquals("https://github.com/Document-Archiver/com.sophisticatedapps.archiving.document-archiver/releases/download/v2.1.0/DocumentArchiver_macos_2_1_0.dmg", tmpResponse);
 
-        tmpResponse = client.latestReleaseAssetDownloadUrl("Document-Archiver/com.sophisticatedapps.archiving.document-archiver", "unix").blockingGet();
+        tmpResponse = client.latestReleaseAssetDownloadUrl("" +
+                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver", "unix").blockingGet();
         assertEquals("https://github.com/Document-Archiver/com.sophisticatedapps.archiving.document-archiver/releases/download/v2.1.0/DocumentArchiver_unix_2_1_0.sh", tmpResponse);
     }
 

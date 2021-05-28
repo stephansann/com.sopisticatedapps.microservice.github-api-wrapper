@@ -7,9 +7,8 @@ As such it should not be used by anybody.
 However, it seems to work. So if you are okay with the things that were said before, here is how it works.
 
 The following examples are using the repository "Document-Archiver/com.sophisticatedapps.archiving.document-archiver".
-The name of the repository has to be URL-encoded, so "Document-Archiver%2Fcom.sophisticatedapps.archiving.document-archiver".
 
-If your repository is "Foo/com.bar.magic", use "Foo%2Fcom.bar.magic" within the URL.
+If your repository is "Foo/Bar", replace "Document-Archiver/com.sophisticatedapps.archiving.document-archiver" with "Foo/Bar" within the URL.
 
 ### latestReleaseTag
 
@@ -17,7 +16,7 @@ Will return the tag of the latest release.
 
 Request
 ```
-http://hostname:8082/githubApiWrapper/Document-Archiver%2Fcom.sophisticatedapps.archiving.document-archiver/latestReleaseTag
+http://hostname:8082/githubApiWrapper/Document-Archiver/com.sophisticatedapps.archiving.document-archiver/latestReleaseTag
 ```
 
 Response
@@ -31,7 +30,7 @@ Will return the download URL of an asset of the latest release. If no recognizer
 
 Request
 ```
-http://hostname:8082/githubApiWrapper/Document-Archiver%2Fcom.sophisticatedapps.archiving.document-archiver/latestReleaseAssetDownloadUrl
+http://hostname:8082/githubApiWrapper/Document-Archiver/com.sophisticatedapps.archiving.document-archiver/latestReleaseAssetDownloadUrl
 ```
 
 Response
@@ -43,7 +42,7 @@ If a recognizer is given, it will be checked against the download link. For exam
 
 Request
 ```
-http://hostname:8082/githubApiWrapper/Document-Archiver%2Fcom.sophisticatedapps.archiving.document-archiver/latestReleaseAssetDownloadUrl?aRecognizer=unix
+http://hostname:8082/githubApiWrapper/Document-Archiver/com.sophisticatedapps.archiving.document-archiver/latestReleaseAssetDownloadUrl?aRecognizer=unix
 ```
 
 Response

@@ -16,12 +16,13 @@ import java.util.Objects;
 @Controller("/githubApiWrapper")
 public class GithubApiWrapperController {
 
-    @Get("/{aRepository}/latestReleaseTag")
-    public String latestReleaseTag(@NotBlank String aRepository) {
+    @Get("/{anOrganization}/{aRepository}/latestReleaseTag")
+    public String latestReleaseTag(@NotBlank String anOrganization, @NotBlank String aRepository) {
 
         try {
 
-            URL tmpURL = new URL("https://api.github.com/repos/" + aRepository + "/releases/latest");
+            URL tmpURL = new URL(
+                    "https://api.github.com/repos/" + anOrganization + "/" + aRepository + "/releases/latest");
 
             try (InputStream tmpInputStream = tmpURL.openStream()) {
 
@@ -37,12 +38,14 @@ public class GithubApiWrapperController {
         }
     }
 
-    @Get("/{aRepository}/latestReleaseAssetDownloadUrl{?aRecognizer}")
-    public String latestReleaseAssetDownloadUrl(@NotBlank String aRepository, @Nullable String aRecognizer) {
+    @Get("/{anOrganization}/{aRepository}/latestReleaseAssetDownloadUrl{?aRecognizer}")
+    public String latestReleaseAssetDownloadUrl(
+            @NotBlank String anOrganization, @NotBlank String aRepository, @Nullable String aRecognizer) {
 
         try {
 
-            URL tmpURL = new URL("https://api.github.com/repos/" + aRepository + "/releases/latest");
+            URL tmpURL = new URL(
+                    "https://api.github.com/repos/" + anOrganization + "/" + aRepository + "/releases/latest");
 
             try (InputStream tmpInputStream = tmpURL.openStream()) {
 
