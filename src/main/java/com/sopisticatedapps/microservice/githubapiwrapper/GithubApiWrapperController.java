@@ -2,8 +2,10 @@ package com.sopisticatedapps.microservice.githubapiwrapper;
 
 import com.republicate.json.Json;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.exceptions.HttpStatusException;
 
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
@@ -34,7 +36,7 @@ public class GithubApiWrapperController {
         }
         catch (IOException e) {
 
-            return ("Exception: " + e.getMessage());
+            throw (new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.valueOf(e.getMessage())));
         }
     }
 
@@ -79,7 +81,7 @@ public class GithubApiWrapperController {
         }
         catch (IOException e) {
 
-            return ("Exception: " + e.getMessage());
+            throw (new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.valueOf(e.getMessage())));
         }
     }
 

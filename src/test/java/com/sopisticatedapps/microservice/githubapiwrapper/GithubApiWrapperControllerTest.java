@@ -1,12 +1,15 @@
 package com.sopisticatedapps.microservice.githubapiwrapper;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.runtime.server.EmbeddedServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GithubApiWrapperControllerTest {
 
@@ -32,6 +35,15 @@ class GithubApiWrapperControllerTest {
         String tmpResponse = client.latestReleaseTag(
                 "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver").blockingGet();
         assertEquals("v2.1.0", tmpResponse);
+    }
+
+    @Test
+    void latestReleaseTag_with_exception() {
+
+        HttpClientResponseException tmpException = assertThrows(HttpClientResponseException.class, (() ->
+                client.latestReleaseTag(
+                        "Document-Archiver", "../../../../../../../etc/passwd").blockingGet()));
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, tmpException.getResponse().getStatus());
     }
 
     @Test
