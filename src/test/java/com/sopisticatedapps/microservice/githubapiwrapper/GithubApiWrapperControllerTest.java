@@ -1,6 +1,7 @@
 package com.sopisticatedapps.microservice.githubapiwrapper;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.runtime.server.EmbeddedServer;
@@ -32,30 +33,42 @@ class GithubApiWrapperControllerTest {
     @Test
     void latestReleaseTag() {
 
-        String tmpResponse = client.latestReleaseTag(
-                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver").blockingGet();
-        assertEquals("v2.1.0", tmpResponse);
+        HttpResponse<String> tmpResponse = client.latestReleaseTag(
+                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver");
+        assertEquals("v2.2.0", tmpResponse.body());
     }
 
     @Test
-    void latestReleaseTag_with_exception() {
+    void testLatestReleaseTag_with_exception() {
 
         HttpClientResponseException tmpException = assertThrows(HttpClientResponseException.class, (() ->
                 client.latestReleaseTag(
-                        "Document-Archiver", "../../../../../../../etc/passwd").blockingGet()));
+                        "Document-Archiver", "../../../../../../../etc/passwd")));
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, tmpException.getResponse().getStatus());
     }
 
     @Test
-    void latestReleaseAssetDownloadUrl() {
+    void testLatestReleaseAssetDownloadUrl() {
 
-        String tmpResponse = client.latestReleaseAssetDownloadUrl(
-                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver", null).blockingGet();
-        assertEquals("https://github.com/Document-Archiver/com.sophisticatedapps.archiving.document-archiver/releases/download/v2.1.0/DocumentArchiver_macos_2_1_0.dmg", tmpResponse);
+        HttpResponse<String> tmpResponse = client.latestReleaseAssetDownloadUrl(
+                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver", null, null);
+        assertEquals("https://github.com/Document-Archiver/com.sophisticatedapps.archiving.document-archiver/releases/download/v2.2.0/DocumentArchiver_macos_2_2_0.dmg",
+                tmpResponse.body());
 
         tmpResponse = client.latestReleaseAssetDownloadUrl("" +
-                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver", "unix").blockingGet();
-        assertEquals("https://github.com/Document-Archiver/com.sophisticatedapps.archiving.document-archiver/releases/download/v2.1.0/DocumentArchiver_unix_2_1_0.sh", tmpResponse);
+                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver", "unix", null);
+        assertEquals("https://github.com/Document-Archiver/com.sophisticatedapps.archiving.document-archiver/releases/download/v2.2.0/DocumentArchiver_unix_2_2_0.sh",
+                tmpResponse.body());
+    }
+
+
+    //@Test
+    void xtestLatestReleaseAssetDownloadUrl_with_redirect() {
+
+        HttpResponse<String> tmpResponse= client.latestReleaseAssetDownloadUrl("" +
+                "Document-Archiver", "com.sophisticatedapps.archiving.document-archiver", "unix", "true");
+        assertEquals(HttpStatus.TEMPORARY_REDIRECT, tmpResponse.getStatus());
+        assertEquals("gg", tmpResponse.getHeaders().get("Location"));
     }
 
 }
